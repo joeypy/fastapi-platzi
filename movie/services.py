@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from .repos import MovieRepo
-from .schemas import MovieCreate, Movie
+from .schemas import MovieCreate, MovieUpdate
 
 
 class MovieService:
@@ -21,6 +21,10 @@ class MovieService:
     @staticmethod
     def create_movie(db: Session, movie: MovieCreate):
         return MovieRepo.create_movie(db, movie)
+    
+    @staticmethod
+    def update_movie(db: Session, movie_id: int, movie_data: MovieUpdate):
+        return MovieRepo.update_movie(db, movie_id, movie_data)
     
     @staticmethod
     def delete_movie(db: Session, movie_id: int):

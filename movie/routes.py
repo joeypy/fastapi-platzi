@@ -5,7 +5,7 @@ from typing import List
 
 from auth.routes import JWTBearer
 from config.database import get_db
-from .schemas import Movie, MovieCreate, MovieSearchParams
+from .schemas import Movie, MovieCreate, MovieSearchParams, MovieUpdate
 from .services import MovieService
 
 router = APIRouter(
@@ -71,6 +71,11 @@ async def create_movie(movie: MovieCreate, db: Session = Depends(get_db)):
     new_movie = MovieService.create_movie(db, movie)
     return {'data': new_movie, 'message': 'Movie was created!'}
 
+
+@router.patch('/movies/{id}', status_code=200)
+async def update_movie(movie_data: MovieUpdate, id: int = Path(ge=1, le=2000), db: Session = Depends(get_db)):
+    new_movie = MovieService.update_movie(db, id, movie_data)
+    return {'data': new_movie, 'message': 'Movie was updated!'}
 
 
 @router.delete('/movies/{id}', status_code=200)
